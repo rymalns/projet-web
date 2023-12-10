@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            background: url(back.jpg) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        .login-box {
+            width: 400px;
+            height: 400px;
+            padding: 100px;
+            box-sizing: border-box;
+            background: rgba(0, 0, 0, 0.75);
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .login-box h2 {
+            text-align: center;
+            color: white;
+            font-family: 'montserat' ,sans-serif;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            border: none;
+            border-bottom: 1px solid white;
+            background: transparent;
+            outline: none;
+            color: white;
+            font-size: 16px;
+            font-family: 'montserat' ,sans-serif;
+        }
+        
+
+        button {
+            position: absolute;
+            border: none;
+            outline: none;
+            color: white;
+            background: rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-box">
+        <h2>Dashboard Login </h2>
+        <form id ="form">
+            <div class="input-group">
+                <label >Username</label>
+                <input type="text" id="username" name="username" require placeholder="DEVWEB"d>
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" name="password" required placeholder="projet">
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+    <script>
+        document.querySelector('form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        // Retrieve form values
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        // Compare with the expected authentication credentials
+        if (username.toLowerCase() === 'devweb' && password === 'projet') {
+            // Set a cookie to indicate successful login
+            Cookies.set('loggedIn', 'true');
+
+            // Redirect the user to the about page
+            window.location.href = 'about.html';
+        } else {
+            alert('Error: Incorrect username or password.');
+        }
+        });
+
+        const form = document.getElementById('form')
+
+    </script>
+</body>
+
+</html>

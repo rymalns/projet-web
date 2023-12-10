@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dash.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <title>Analysis</title>
+</head>
+<body>
+    <nav>
+        <label>
+            <input type="checkbox">
+            <div class="toggle">
+                <span class="common top_line"></span>
+                <span class="common middle_line"></span>
+                <span class="common bottom_line"></span>
+            </div>
+            <div class="slide">
+                 <div class="x"><i class="fa-brands fa-x-twitter"></i></i></div>
+                <h1>MENU</h1>
+                <ul>
+                    <li style="--i:1">
+                    <div class="dropdown">
+                      <button class="dropbtn"> <i class="fa fa-user-o"></i>DEVWEB <i class="fa-solid fa-caret-down"></i></button>
+                      <div class="dropdown-content">
+                        <a href="loge.html">disconnect</a>
+                      </div>
+                    </div></li>
+                    <li style="--i:2"><a href="about.html"><i class="fa fa-info-circle"></i> About Us</a></li>
+                    <li style="--i:3"><a href="analysis.html"><i class="fa fa-bar-chart-o"></i> Analysis</a></li>
+                    <li style="--i:4"><a href="feedback.html"><i class="fa fa-comment-o"></i> Feedback</a></li>
+                </ul>
+            </div>
+        </label>
+    </nav>  
+    <section class="container mt-5" >
+        <h1>Dashboard Analysis</h1>
+        <br>
+        <p class="main-paragraph"> Measuring network performance is crucial for maintaining efficient communication. It provides insights into reliability, speed, and overall efficiency, helping identify and address issues promptly. This proactive approach ensures a seamless user experience and supports infrastructure scalability. In summary, network performance measurement is fundamental for delivering optimal digital services.</p>
+        <br>
+        <button class="btn btn-primary mt-3" id="button"> Evaluate Now</button>
+    </section>
+    <!-- Ajoutez cette partie dans le fichier about.html -->
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Vérifie si l'utilisateur est connecté en vérifiant le cookie
+        const loggedIn = Cookies.get('loggedIn');
+
+        // Mettez à jour la barre de navigation en conséquence
+        if (loggedIn === 'true') {
+            const loginLink = document.querySelector('nav ul li:nth-child(1) a');
+            loginLink.innerHTML = '<i class="fa fa-user-o"></i> DEVWEB';
+        }
+
+        const evaluateButton = document.getElementById('button');
+        evaluateButton.addEventListener('click', function () {
+
+            window.location.href = 'dash.html';
+        });
+    });
+</script>
+
+</body>
+</html>

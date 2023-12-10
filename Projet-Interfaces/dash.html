@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dash.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js"></script>
+    <title>Analysis</title>
+</head>
+<body>
+    <nav >
+        <label >
+            <input type="checkbox">
+            <div class="toggle">
+                <span class="common top_line"></span>
+                <span class="common middle_line"></span>
+                <span class="common bottom_line"></span>
+            </div>
+            <div class="slide">
+                <div class="x"><i class="fa-brands fa-x-twitter"></i></i></div>
+                <h1>MENU</h1>
+                <ul>
+                    <li style="--i:1">
+                    <div class="dropdown">
+                      <button class="dropbtn"> <i class="fa fa-user-o"></i>DEVWEB <i class="fa-solid fa-caret-down"></i></button>
+                      <div class="dropdown-content">
+                        <a href="loge.html">disconnect</a>
+                      </div>
+                    </div></li>
+                    <li style="--i:2"><a href="about.html"><i class="fa fa-info-circle"></i> About Us</a></li>
+                    <li style="--i:3"><a href="analysis.html"><i class="fa fa-bar-chart-o"></i> Analysis</a></li>
+                    <li style="--i:4"><a href="feedback.html"><i class="fa fa-comment-o"></i> Feedback</a></li>
+                </ul>
+            </div>
+        </label>
+    </nav>  
+    <main class="container mt-5"  >
+        <div class="container"style=" display:flex; margin-bottom:90px; align-item:center; ">
+            
+            <div class="box" id="routerBox">
+                
+                <p>Nombre de routeur</p>
+                <img src=" router.png" style="width:90px; margin-top:30px;margin-bottom:15px;">
+                <p>1</p>
+                
+            </div>
+    
+            <div class="box" id="switchBox">
+                
+                <p>Nombre de Switch</p>
+                <img src="switch.png" style="width:90px;">
+                <p>1</p>
+            </div>
+    
+            <div class="box" id="pcBox">
+                
+                <p>Nombre de PC</p>
+                <img src="pc.png" style="width:90px;">
+                <p>1</p>
+            </div>
+    
+            <div class="box" id="serverBox">
+                
+                <p>Nombre de Serveurs</p>
+                <img src="server.png" style="width:90px;">
+                <p>1</p>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom:90px;">
+            <div class="col-12">
+                <table class="table">
+                    <tr>
+                        <th>Ports</th>
+                        <th>Type of wiring </th>
+                        <th>Section</th>
+                        <th>On/Off</th>
+                    </tr>
+                    <tr>
+                        <td>G0/6</td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <span id="statusG06" class="circle "></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>G0/0</td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <span id="statusG00" class="circle"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>G0/1</td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <span id="statusG01" class="circle"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>G0/3</td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <span id="statusG03" class="circle"></span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <div class="card1">
+                    <h3 style="text-align: center; color: #333;">Real-Time CPU Graph</h3>
+                    <canvas id="cpuChart"></canvas>
+                </div>
+            </div>
+    
+    
+            <div class="col-md-4">
+                <div class="card">
+                    <h3 style="text-align: center; color: #333; ">Bandwidth Consumption</h3>
+                    <canvas id="bandwidthChart"></canvas>
+                </div>
+            </div>
+
+            
+            <div class="col-md-4">
+                <div class="card2">
+                    <h3 style="text-align: center; color: #333;">Latency</h3>
+                    <canvas id="latencyChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const cpuCtx = document.getElementById('cpuChart').getContext('2d');
+            const cpuChart = new Chart(cpuCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        borderColor: '#103a56',
+                        backgroundColor: 'rgba(16, 58, 86, 0.2)',
+                        borderWidth: 2,
+                        
+                        pointRadius: 0,
+                        lineTension: 0.3,
+                        cubicInterpolationMode: 'monotone',
+                        data: []
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            grid: {
+                                color: '#ecf0f1'
+                            }
+                        },
+                        y: {
+                            max: 100,
+                            beginAtZero: true,
+                            grid: {
+                                color: '#ecf0f1'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            const bandwidthCtx = document.getElementById('bandwidthChart').getContext('2d');
+            const bandwidthChart = new Chart(bandwidthCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Used', 'Remaining'],
+                    datasets: [{
+                        data: [0, 100],
+                        backgroundColor: [],
+                        borderWidth: 1,
+                        borderColor: '#e9f4fb'
+                    }]
+                },
+                options: {
+                    cutout: '75%',
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            const latencyCtx = document.getElementById('latencyChart').getContext('2d');
+            const latencyChart = new Chart(latencyCtx, {
+                type: 'bar',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Latency',
+                        data: [],
+                        backgroundColor: generatePastelColors(10),
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            grid: {
+                                color: '#ecf0f1'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: '#ecf0f1'
+                            }
+                        }
+                    }
+                }
+            });
+
+            const socket = io();
+
+            socket.on('cpuData', function (data) {
+                const time = new Date().toLocaleTimeString();
+                cpuChart.data.labels.push(time);
+                cpuChart.data.datasets[0].data.push(data);
+
+                if (cpuChart.data.labels.length > 10) {
+                    cpuChart.data.labels.shift();
+                    cpuChart.data.datasets[0].data.shift();
+                }
+
+                cpuChart.update();
+            });
+
+            socket.on('bandwidthData', function (percentage) {
+                const rainbowGradient = createRainbowGradient(percentage);
+
+                bandwidthChart.data.datasets[0].backgroundColor = rainbowGradient;
+                bandwidthChart.data.datasets[0].data = [percentage, 100 - percentage];
+                bandwidthChart.update();
+            });
+
+            socket.on('latencyData', function (data) {
+                const time = new Date().toLocaleTimeString();
+                latencyChart.data.labels.push(time);
+                latencyChart.data.datasets[0].data.push(data);
+
+                if (latencyChart.data.labels.length > 10) {
+                    latencyChart.data.labels.shift();
+                    latencyChart.data.datasets[0].data.shift();
+                }
+
+                latencyChart.update();
+            });
+
+            function generatePastelColors(count) {
+                const colors = [];
+                for (let i = 0; i < count; i++) {
+                    const color = `hsla(${Math.random() * 360}, 25%, 80%, 1)`;
+                    colors.push(color);
+                }
+                return colors;
+            }
+
+            function createRainbowGradient(percentage) {
+                const colors = [];
+                for (let i = 0; i < 360; i += 30) {
+                    const color = `hsl(${i}, 100%, ${percentage}%)`;
+                    colors.push(color);
+                }
+                return colors;
+            }
+        });
+
+        // Fonction pour mettre à jour l'état On/Off
+        function updateOnOffStatus(port) {
+            const statusElement = document.getElementById(`status${port}`);
+            const status="off";
+            if (status == "on") {
+                //window.alert("on");
+                statusElement.innerHTML = '<div class="circle green" ></div>';
+            } else {
+                //window.alert("off");
+                status.innerHTML = '<div class="circle red"></div>';
+            }
+        }
+
+        const socket = io();
+
+        socket.on('networkData', function (data) {
+            const networkPorts = [
+                { port: 'G0/6', status: data.portG06 },
+                { port: 'G0/0', status: data.portG00 },
+                { port: 'G0/1', status: data.portG01 },
+                { port: 'G0/3', status: data.portG03 }
+            ];
+
+            networkPorts.forEach(portData => {
+                updateOnOffStatus(portData.port, portData.status);
+            });
+        });
+    </script>
+</body>
+</html>

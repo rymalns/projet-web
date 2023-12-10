@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dash.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">         
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <title>Feedback</title>
+</head>
+<body>
+    <nav class="index">
+        <label>
+            <input type="checkbox">
+            <div class="toggle">
+                <span class="common top_line"></span>
+                <span class="common middle_line"></span>
+                <span class="common bottom_line"></span>
+            </div>
+            <div class="slide">
+                <div class="x"><i class="fa-brands fa-x-twitter"></i></i></div>
+                <h1>MENU</h1>
+                <ul>
+                    <li style="--i:1">
+                    <div class="dropdown">
+                      <button class="dropbtn"> <i class="fa fa-user-o"></i>DEVWEB <i class="fa-solid fa-caret-down"></i></button>
+                      <div class="dropdown-content">
+                        <a href="loge.html">disconnect</a>
+                      </div>
+                    </div></li>
+                    <li style="--i:2"><a href="about.html"><i class="fa fa-info-circle"></i> About Us</a></li>
+                    <li style="--i:3"><a href="analysis.html"><i class="fa fa-bar-chart-o"></i> Analysis</a></li>
+                    <li style="--i:4"><a href="feedback.html"><i class="fa fa-comment-o"></i> Feedback</a></li>
+                </ul>
+            </div>
+        </label>
+    </nav>
+    <main class="container mt-5" class="main">
+        <h1>Feedback Us !!</h1>
+        <h2 style="color: #f9f9f9;">"What is your level of satisfaction with our services?"</h2> 
+        <div class="rating">
+            <input type="radio" name="star" id="star1" >
+            <label for="star1">
+                <img src="sad.png">
+                <h4>sad</h4>
+            </label>
+
+            <input type="radio" name="star" id="star2">
+            <label for="star2">
+                <img src="shocked.png" onclick = function(this.id) id="shock">
+                <h4>shocked</h4>
+            </label>
+
+            <input type="radio" name="star" id="star3" checked="checked">
+            <label for="star3">
+                <img src="thinking.png">
+                <h4>thinking</h4>
+            </label>
+
+            
+            <input type="radio" name="star" id="star4">
+            <label for="star4">
+                <img src="happy.png">
+                <h4>happy</h4>
+            </label>
+
+            <input type="radio" name="star" id="star5">
+            <label for="star5">
+                <img src="in-love.png">
+                <h4>in-love</h4>
+            </label>
+        </div>
+        <br>
+        <p class="main-paragraph">What advice can you give us?</p><br>
+        <textarea class="form-control" id="conseil" cols="3" rows="7" ></textarea>
+        <button class="btn btn-primary mt-3" id="button">Send</button>
+    </main>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Ajoutez cette partie dans le fichier about.html -->
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Vérifie si l'utilisateur est connecté en vérifiant le cookie
+        const loggedIn = Cookies.get('loggedIn');
+
+        // Mettez à jour la barre de navigation en conséquence
+        if (loggedIn === 'true') {
+            const loginLink = document.querySelector('nav ul li:nth-child(1) a');
+            loginLink.innerHTML = '<i class="fa fa-user-o"></i> DEVWEB';
+        }
+    });
+
+    const img = document.getElementById('shock')
+    
+    function(id){
+        print("this id is "id);
+        var = id;
+
+       
+
+
+    }
+
+</script>
+
+</body>
+</html>
